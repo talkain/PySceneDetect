@@ -360,8 +360,13 @@ def split_input_video(input_path, output_path, timecode_list_str):
     print('[PySceneDetect] Splitting video into clips...')
     ret_val = None
     try:
+        mkvmerge_path = 'mkvmerge'
+        windows_mkvmerge_path = r"C:\Program Files\MKVToolNix\mkvmerge.exe"
+        if 'win32' in sys.platform and os.path.exists(windows_mkvmerge_path):
+            mkvmerge_path = windows_mkvmerge_path
+        
         ret_val = subprocess.call(
-            ['mkvmerge',
+            [mkvmerge_path,
              '-o', output_path,
              '--split', 'timecodes:%s' % timecode_list_str,
              input_path])
